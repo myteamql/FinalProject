@@ -1,4 +1,4 @@
-CREATE TABLE Room
+CREATE TABLE IF NOT EXISTS Room
 (
     RoomNumber   INTEGER NOT NULL,
     MaxOccupants INTEGER,
@@ -11,9 +11,15 @@ CREATE TABLE Room
     PRIMARY KEY (RoomNumber)
 );
 
-CREATE TABLE Reservation
+CREATE TABLE IF NOT EXISTS CreditCard
 (
-    Code      INTEGER NOT NULL,
+    CrNumber BIGINT NOT NULL AUTO_INCREMENT,
+    PRIMARY KEY (CrNumber)
+);
+
+CREATE TABLE IF NOT EXISTS Reservation
+(
+    Code      INTEGER NOT NULL AUTO_INCREMENT,
     Room      INTEGER,
     CheckIn   DATE,
     CheckOut  DATE,
@@ -23,21 +29,16 @@ CREATE TABLE Reservation
     Adults    INTEGER,
     Kids      INTEGER,
     Cancelled TINYINT(1) DEFAULT 0,
-    CrNumber  LONG,
-    PRIMARY KEY (RoomNumber),
-    FOREIGN KEY (Room) REFERENCES Room (Room)
+    CrNumber  BIGINT,
+    PRIMARY KEY (Code),
+	FOREIGN KEY (CrNumber) REFERENCES CreditCard (CrNumber),
+    FOREIGN KEY (Room) REFERENCES Room (RoomNumber)
 );
 
-CREATE TABLE CreditCard
-(
-    CrNumber LONG NOT NULL,
-    PRIMARY KEY (CrNumber)
-);
-
-CREATE TABLE Payment
+CREATE TABLE IF NOT EXISTS Payment
 (
     ReservationCode INTEGER NOT NULL,
-    CrNumber        LONG,
+    CrNumber        BIGINT,
     Charged         FLOAT,
     PRIMARY KEY (ReservationCode),
     FOREIGN KEY (ReservationCode) REFERENCES Reservation (Code),

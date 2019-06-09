@@ -8,12 +8,16 @@ CREATE TABLE IF NOT EXISTS Room
     Beds         INTEGER,
     Length       FLOAT,
     Popularity   FLOAT,
+    Pictureurl   VARCHAR(2000),
+    NextAvailable Date,
     PRIMARY KEY (RoomNumber)
 );
 
 CREATE TABLE IF NOT EXISTS CreditCard
 (
     CrNumber BIGINT NOT NULL AUTO_INCREMENT,
+    First     VARCHAR(50),
+    Last      VARCHAR(50),
     PRIMARY KEY (CrNumber)
 );
 
@@ -38,6 +42,8 @@ CREATE TABLE IF NOT EXISTS Reservation
 CREATE TABLE IF NOT EXISTS Payment
 (
     ReservationCode INTEGER NOT NULL,
+    First           VARCHAR(50),
+    Last            VARCHAR(50),
     CrNumber        BIGINT,
     Charged         FLOAT,
     PRIMARY KEY (ReservationCode),

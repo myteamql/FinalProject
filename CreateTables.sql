@@ -1,52 +1,51 @@
 CREATE TABLE IF NOT EXISTS Room
 (
-    RoomNumber   INTEGER NOT NULL,
-    MaxOccupants INTEGER,
-    Type         VARCHAR(50),
-    Decor        VARCHAR(255),
-    Price        FLOAT,
-    Beds         INTEGER,
-    Length       FLOAT,
-    Popularity   FLOAT,
-    Pictureurl   VARCHAR(2000),
-    NextAvailable Date,
-    PRIMARY KEY (RoomNumber)
+    room_number   INTEGER NOT NULL AUTO_INCREMENT,
+    max_occupants INTEGER,
+    type         VARCHAR(50),
+    decor        VARCHAR(255),
+    price        FLOAT,
+    beds         INTEGER,
+    length       FLOAT,
+    popularity   FLOAT,
+    pictureurl   VARCHAR(2000),
+    next_available Date,
+    PRIMARY KEY (room_number)
 );
 
 CREATE TABLE IF NOT EXISTS CreditCard
 (
-    CrNumber BIGINT NOT NULL AUTO_INCREMENT,
-    First     VARCHAR(50),
-    Last      VARCHAR(50),
-    PRIMARY KEY (CrNumber)
+    cr_number BIGINT NOT NULL,
+    first     VARCHAR(50),
+    last      VARCHAR(50),
+    PRIMARY KEY (cr_number)
 );
 
 CREATE TABLE IF NOT EXISTS Reservation
 (
-    Code      INTEGER NOT NULL AUTO_INCREMENT,
-    Room      INTEGER,
-    CheckIn   DATE,
-    CheckOut  DATE,
-    Rate      FLOAT,
-    LastName  VARCHAR(50),
-    FirstName VARCHAR(50),
-    Adults    INTEGER,
-    Kids      INTEGER,
-    Canceled TINYINT(1) DEFAULT 0,
-    CrNumber  BIGINT,
-    PRIMARY KEY (Code),
-	FOREIGN KEY (CrNumber) REFERENCES CreditCard (CrNumber),
-    FOREIGN KEY (Room) REFERENCES Room (RoomNumber)
+    code      INTEGER NOT NULL AUTO_INCREMENT,
+    room      INTEGER,
+    check_in   DATE,
+    check_out  DATE,
+    last_name  VARCHAR(50),
+    first_name VARCHAR(50),
+    adults    INTEGER,
+    kids      INTEGER,
+    canceled TINYINT(1) DEFAULT 0,
+    cr_number  BIGINT,
+    PRIMARY KEY (code),
+	FOREIGN KEY (cr_number) REFERENCES CreditCard (cr_number),
+    FOREIGN KEY (room) REFERENCES Room (room_number)
 );
 
 CREATE TABLE IF NOT EXISTS Payment
 (
-    ReservationCode INTEGER NOT NULL,
-    First           VARCHAR(50),
-    Last            VARCHAR(50),
-    CrNumber        BIGINT,
-    Charged         FLOAT,
-    PRIMARY KEY (ReservationCode),
-    FOREIGN KEY (ReservationCode) REFERENCES Reservation (Code),
-    FOREIGN KEY (CrNumber) REFERENCES CreditCard (CrNumber)
+    reservation_code INTEGER NOT NULL,
+    first           VARCHAR(50),
+    last            VARCHAR(50),
+    cr_number        BIGINT,
+    charged         FLOAT,
+    PRIMARY KEY (reservation_code),
+    FOREIGN KEY (reservation_code) REFERENCES Reservation (code),
+    FOREIGN KEY (cr_number) REFERENCES CreditCard (cr_number)
 );

@@ -32,7 +32,7 @@ CREATE TABLE IF NOT EXISTS Reservation
     FirstName VARCHAR(50),
     Adults    INTEGER,
     Kids      INTEGER,
-    Cancelled TINYINT(1) DEFAULT 0,
+    Canceled TINYINT(1) DEFAULT 0,
     CrNumber  BIGINT,
     PRIMARY KEY (Code),
 	FOREIGN KEY (CrNumber) REFERENCES CreditCard (CrNumber),
